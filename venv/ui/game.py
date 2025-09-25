@@ -26,9 +26,20 @@ class Button:
         self.hovered = False
         
     def draw(self, screen):
-        color = self.color if not self.hovered else tuple(max(0, c-30) for c in self.color)
-        pygame.draw.rect(screen, color, self.rect, border_radius=10)
+        # Ombre du bouton
+        if not self.hovered:
+            shadow_color = (self.color[0]//2, self.color[1]//2, self.color[2]//2, 100) # Couleur plus foncée et transparente
+            shadow_rect = self.rect.move(3, 3)
+            pygame.draw.rect(screen, shadow_color, shadow_rect, border_radius=10)
+
+        # Couleur du bouton (plus claire au survol)
+        button_color = self.color
+        if self.hovered:
+            button_color = tuple(min(255, c + 30) for c in self.color) # Éclaircir au survol
         
+        pygame.draw.rect(screen, button_color, self.rect, border_radius=10)
+        
+        # Texte du bouton
         text_surface = self.font.render(self.text, True, self.text_color)
         text_rect = text_surface.get_rect(center=self.rect.center)
         screen.blit(text_surface, text_rect)
@@ -50,52 +61,61 @@ class CropCard:
         self.font = pygame.font.Font(None, 24)
         
     def draw(self, screen):
-        # Fond de la carte
-        pygame.draw.rect(screen, self.color, self.rect, border_radius=15)
+        # Fond de la carte avec ombre subtile
+        shadow_rect = self.rect.move(5, 5)
+        pygame.draw.rect(screen, GRAY_DARK, shadow_rect, border_radius=15) # Ombre
+        pygame.draw.rect(screen, self.color, self.rect, border_radius=15) # Fond principal
         
-        # Icône de plante (simple représentation)
+        # Bordure
+        pygame.draw.rect(screen, BLACK, self.rect, width=2, border_radius=15)
+        
+        # Icône de plante (simple représentation améliorée)
         if self.name:
-            icon_size = 40
+            icon_size = 50
             icon_x = self.rect.centerx
-            icon_y = self.rect.y + 30
+            icon_y = self.rect.y + 40
             
             # Tige
             pygame.draw.line(screen, GREEN_DARK, 
-                            (icon_x, icon_y + 20), 
-                            (icon_x, icon_y + icon_size), 3)
+                            (icon_x, icon_y + 10), 
+                            (icon_x, icon_y + icon_size), 4)
             
-            # Feuilles
-            for i, angle in enumerate([45, -45, 135, -135]):
-                if i < 2:  # Feuilles du haut
-                    end_x = icon_x + math.cos(math.radians(angle)) * 15
-                    end_y = icon_y + 10 + math.sin(math.radians(angle)) * 15
-                    pygame.draw.line(screen, GREEN_DARK, 
-                                   (icon_x, icon_y + 10), (end_x, end_y), 2)
+            # Feuilles (plus stylisées)
+            leaf_color = GREEN_DARK
+            pygame.draw.ellipse(screen, leaf_color, (icon_x - 20, icon_y, 25, 15))
+            pygame.draw.ellipse(screen, leaf_color, (icon_x - 5, icon_y - 10, 25, 15))
+            pygame.draw.ellipse(screen, leaf_color, (icon_x - 20, icon_y + 15, 25, 15))
+            pygame.draw.ellipse(screen, leaf_color, (icon_x - 5, icon_y + 25, 25, 15))
         
         # Nom de la culture
         if self.name:
             text_surface = self.font.render(self.name, True, BLACK)
             text_rect = text_surface.get_rect(centerx=self.rect.centerx, 
-                                            y=self.rect.y + 80)
+                                            y=self.rect.y + 100) # Ajuster la position
             screen.blit(text_surface, text_rect)
             
             # Barre de progression
-            progress_width = self.rect.width - 20
-            progress_height = 8
-            progress_x = self.rect.x + 10
-            progress_y = self.rect.bottom - 30
+            progress_width = self.rect.width - 30 # Plus de marge
+            progress_height = 10 # Plus épaisse
+            progress_x = self.rect.x + 15
+            progress_y = self.rect.bottom - 35 # Ajuster la position
             
             # Fond de la barre
-            pygame.draw.rect(screen, WHITE, 
+            pygame.draw.rect(screen, GRAY_LIGHT, 
                             (progress_x, progress_y, progress_width, progress_height),
-                            border_radius=4)
+                            border_radius=5)
             
             # Progression
             fill_width = int(progress_width * self.progress)
             if fill_width > 0:
                 pygame.draw.rect(screen, BLUE, 
                                (progress_x, progress_y, fill_width, progress_height),
-                               border_radius=4)
+                               border_radius=5)
+                
+            # Texte de progression
+            progress_percent_text = self.font.render(f"{int(self.progress * 100)}%", True, BLACK)
+            progress_percent_rect = progress_percent_text.get_rect(centerx=self.rect.centerx, y=progress_y - 20)
+            screen.blit(progress_percent_text, progress_percent_rect)
 
 class GameInterface:
     def __init__(self, screen):
@@ -122,14 +142,20 @@ class GameInterface:
         self.ai_advice = ""
         self.crop_cards = []
         
-        # Boutons d'action
-        self.water_btn = Button(160, 550, 120, 40, "💧 Arroser (10L)", BLUE)
-        self.fertilize_btn = Button(320, 550, 150, 40, "🌱 Fertiliser (50€)", ORANGE)
-        self.harvest_btn = Button(492, 550, 120, 40, "🌾 Récolter", GREEN_PRIMARY)
-        self.ai_btn = Button(620, 550, 120, 40, "🤖 Conseil IA", PURPLE)
+        # Boutons d'action (centrés et espacés)
+        button_width = 140
+        button_height = 50
+        button_spacing = 20
+        total_buttons_width = (button_width * 4) + (button_spacing * 3)
+        start_x_buttons = (self.width - total_buttons_width) // 2
         
-        # Menu contextuel IA
-        self.ai_popup_rect = pygame.Rect(300, 200, 400, 300)
+        self.water_btn = Button(start_x_buttons, 550, button_width, button_height, "💧 Arroser (10L)", BLUE)
+        self.fertilize_btn = Button(start_x_buttons + button_width + button_spacing, 550, button_width, button_height, "🌱 Fertiliser (50€)", ORANGE)
+        self.harvest_btn = Button(start_x_buttons + (button_width + button_spacing) * 2, 550, button_width, button_height, "🌾 Récolter", GREEN_PRIMARY)
+        self.ai_btn = Button(start_x_buttons + (button_width + button_spacing) * 3, 550, button_width, button_height, "🤖 Conseil IA", PURPLE)
+        
+        # Menu contextuel IA (centré)
+        self.ai_popup_rect = pygame.Rect(self.width // 2 - 200, self.height // 2 - 150, 400, 300)
         self.close_ai_btn = Button(self.ai_popup_rect.right - 60, self.ai_popup_rect.y + 10, 
                                   50, 30, "✕", (220, 38, 38))
         
@@ -154,22 +180,25 @@ class GameInterface:
         """Génère les cartes de cultures basées sur la configuration"""
         self.crop_cards.clear()
         
-        # Calculer la disposition des cartes
+        # Calculer la disposition des cartes (centrées)
         cards_per_row = 3
-        card_width = 150
-        card_height = 150
-        start_x = 50
-        start_y = 120
-        spacing_x = 170
-        spacing_y = 170
+        card_width = 160 # Légèrement plus large
+        card_height = 180 # Légèrement plus haute
+        card_padding_x = 30
+        card_padding_y = 30
+        
+        # Calculer le point de départ pour centrer les cartes
+        total_cards_width = (card_width * cards_per_row) + (card_padding_x * (cards_per_row - 1))
+        start_x = (self.width - total_cards_width) // 2
+        start_y = 100 # Ajuster la position de départ en Y
         
         available_crops = config["region_data"]["cultures"]
         
         for i in range(config["plots"]):
             row = i // cards_per_row
             col = i % cards_per_row
-            x = start_x + col * spacing_x
-            y = start_y + row * spacing_y
+            x = start_x + col * (card_width + card_padding_x)
+            y = start_y + row * (card_height + card_padding_y)
             
             # Assigner une culture ou laisser vide
             if i < len(available_crops):
@@ -299,25 +328,36 @@ class GameInterface:
         if self.current_day >= self.max_days:
             return "game_over"
         
-        # En-tête
-        header_rect = pygame.Rect(0, 0, self.width, 60)
-        pygame.draw.rect(self.screen, GREEN_PRIMARY, header_rect)
+        # En-tête (avec dégradé et ombre)
+        header_surface = pygame.Surface((self.width, 70), pygame.SRCALPHA)
+        pygame.draw.rect(header_surface, GREEN_PRIMARY, header_surface.get_rect(), border_radius=0)
+        pygame.draw.rect(header_surface, (0,0,0,50), header_surface.get_rect().move(0,5), border_radius=0) # Ombre
+        self.screen.blit(header_surface, (0,0))
         
-        # Bouton menu
+        # Bouton menu (plus stylisé)
+        menu_btn_rect = pygame.Rect(15, 15, 100, 40)
+        pygame.draw.rect(self.screen, GREEN_DARK, menu_btn_rect, border_radius=8)
         menu_text = self.text_font.render("← Menu", True, WHITE)
-        menu_rect = menu_text.get_rect(x=20, centery=30)
+        menu_rect = menu_text.get_rect(center=menu_btn_rect.center)
         self.screen.blit(menu_text, menu_rect)
         
-        # Titre avec jour
-        title_text = self.text_font.render(f"Farm Navigator - Jour {self.current_day}/{self.max_days}", True, WHITE)
-        title_rect = title_text.get_rect(centerx=self.width//2, centery=30)
-        self.screen.blit(title_text, title_rect)
+        # Titre avec jour (plus grand et centré)
+        title_text = self.title_font.render(f"Farm Navigator", True, WHITE)
+        day_text = self.subtitle_font.render(f"Jour {self.current_day}/{self.max_days}", True, WHITE)
         
-        # Indicateur de temps restant
+        title_rect = title_text.get_rect(centerx=self.width//2, y=10)
+        day_rect = day_text.get_rect(centerx=self.width//2, y=title_rect.bottom + 5)
+        
+        self.screen.blit(title_text, title_rect)
+        self.screen.blit(day_text, day_rect)
+        
+        # Indicateur de temps restant (plus visible)
         days_left = self.max_days - self.current_day
         if days_left > 0:
-            time_text = self.text_font.render(f"⏰ {days_left} jour(s) restant(s)", True, WHITE)
-            time_rect = time_text.get_rect(x=self.width - 200, centery=30)
+            time_panel_rect = pygame.Rect(self.width - 180, 15, 160, 40)
+            pygame.draw.rect(self.screen, YELLOW, time_panel_rect, border_radius=8)
+            time_text = self.text_font.render(f"⏰ {days_left} jour(s) restant(s)", True, BLACK)
+            time_rect = time_text.get_rect(center=time_panel_rect.center)
             self.screen.blit(time_text, time_rect)
         
         # Grille des cultures
@@ -327,9 +367,12 @@ class GameInterface:
         # Panels d'information
         self._draw_info_panels()
         
-        # Indicateur de sélection
-        selected_text = self.text_font.render("🌱 Parcelle 1 sélectionnée", True, GREEN_PRIMARY)
-        selected_rect = selected_text.get_rect(centerx=self.width//2, y=500)
+        # Indicateur de sélection (plus stylisé)
+        selected_panel_rect = pygame.Rect(self.width//2 - 150, 500, 300, 40)
+        pygame.draw.rect(self.screen, GREEN_LIGHT, selected_panel_rect, border_radius=10)
+        pygame.draw.rect(self.screen, GREEN_DARK, selected_panel_rect, width=2, border_radius=10)
+        selected_text = self.text_font.render("🌱 Parcelle 1 sélectionnée", True, BLACK)
+        selected_rect = selected_text.get_rect(center=selected_panel_rect.center)
         self.screen.blit(selected_text, selected_rect)
         
         # Boutons d'action
@@ -346,10 +389,11 @@ class GameInterface:
     def _draw_info_panels(self):
         """Dessine les panels d'information"""
         # Panel météo
-        weather_panel = pygame.Rect(620, 80, 350, 120)
+        weather_panel = pygame.Rect(620, 80, 350, 150) # Agrandir le panel
         pygame.draw.rect(self.screen, WHITE, weather_panel, border_radius=10)
+        pygame.draw.rect(self.screen, GRAY_DARK, weather_panel, width=2, border_radius=10) # Bordure
         
-        weather_title = self.text_font.render("☀️ Météo du jour", True, BLACK)
+        weather_title = self.subtitle_font.render("☀️ Météo du jour", True, BLACK)
         self.screen.blit(weather_title, (630, 90))
         
         sunny_text = self.text_font.render("☀️ Ensoleillé    25°C", True, BLACK)
@@ -362,45 +406,47 @@ class GameInterface:
             self.screen.blit(progress_text, (630, 150))
             
             # Barre de progression
-            progress_rect = pygame.Rect(630, 170, 300, 10)
-            pygame.draw.rect(self.screen, GRAY_LIGHT, progress_rect, border_radius=5)
+            progress_rect = pygame.Rect(630, 170, 300, 15) # Plus épaisse
+            pygame.draw.rect(self.screen, GRAY_LIGHT, progress_rect, border_radius=7)
             fill_width = int(300 * day_progress)
             if fill_width > 0:
                 pygame.draw.rect(self.screen, GREEN_PRIMARY, 
-                               (630, 170, fill_width, 10), border_radius=5)
+                               (630, 170, fill_width, 15), border_radius=7)
         
         # Panel ressources
-        resources_panel = pygame.Rect(620, 220, 350, 120)
+        resources_panel = pygame.Rect(620, 240, 350, 150) # Agrandir le panel
         pygame.draw.rect(self.screen, WHITE, resources_panel, border_radius=10)
+        pygame.draw.rect(self.screen, GRAY_DARK, resources_panel, width=2, border_radius=10) # Bordure
         
-        resources_title = self.text_font.render("💧 Ressources", True, BLACK)
-        self.screen.blit(resources_title, (630, 230))
+        resources_title = self.subtitle_font.render("💧 Ressources", True, BLACK)
+        self.screen.blit(resources_title, (630, 250))
         
         # Couleur d'alerte pour l'eau
         water_color = (220, 38, 38) if self.water_level < 30 else BLACK
         water_text = self.text_font.render(f"💧 Eau                    {self.water_level}L", True, water_color)
-        self.screen.blit(water_text, (630, 260))
+        self.screen.blit(water_text, (630, 280))
         
         money_text = self.text_font.render(f"💰 Argent             {self.money}€", True, BLACK)
-        self.screen.blit(money_text, (630, 290))
+        self.screen.blit(money_text, (630, 310))
         
         # Score de durabilité
         sustain_color = GREEN_PRIMARY if self.sustainability_score > 70 else (255, 165, 0) if self.sustainability_score > 40 else (220, 38, 38)
         sustain_text = self.text_font.render(f"🌍 Durabilité        {self.sustainability_score}%", True, sustain_color)
-        self.screen.blit(sustain_text, (630, 315))
+        self.screen.blit(sustain_text, (630, 340))
         
         # Panel état des cultures
-        crops_panel = pygame.Rect(620, 360, 350, 80)
+        crops_panel = pygame.Rect(620, 400, 350, 100) # Agrandir le panel
         pygame.draw.rect(self.screen, WHITE, crops_panel, border_radius=10)
+        pygame.draw.rect(self.screen, GRAY_DARK, crops_panel, width=2, border_radius=10) # Bordure
         
-        crops_title = self.text_font.render("🌱 État des cultures", True, BLACK)
-        self.screen.blit(crops_title, (630, 370))
+        crops_title = self.subtitle_font.render("🌱 État des cultures", True, BLACK)
+        self.screen.blit(crops_title, (630, 410))
         
         mature_count = sum(1 for card in self.crop_cards if card.progress >= 0.8 and card.name)
         growing_count = sum(1 for card in self.crop_cards if 0 < card.progress < 0.8 and card.name)
         
         status_text = self.text_font.render(f"Matures: {mature_count} | En croissance: {growing_count}", True, BLACK)
-        self.screen.blit(status_text, (630, 400))
+        self.screen.blit(status_text, (630, 440))
         
     def handle_event(self, event):
         # Vérifier clic sur "Menu"
