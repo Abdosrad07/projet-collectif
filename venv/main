@@ -1,0 +1,93 @@
+import pygame
+import sys
+from ui.menu import MenuInterface
+from ui.config import ConfigInterface
+from ui.game import GameInterface
+from ui.results import ResultsInterface
+
+# Initialisation de Pygame
+pygame.init()
+
+# Constantes globales
+WINDOW_WIDTH = 1200
+WINDOW_HEIGHT = 900
+FPS = 60
+
+class FarmNavigator:
+    def __init__(self):
+        self.screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+        pygame.display.set_caption("Farm Navigator - Cultivez Votre Rêve")
+        self.clock = pygame.time.Clock()
+        self.current_screen = "menu"
+
+        # Initialisation des interfaces
+        self.menu = MenuInterface(self.screen)
+        self.config = ConfigInterface(self.screen)
+        self.game = GameInterface(self.screen)
+        self.results = ResultsInterface(self.screen)
+    
+    def handle_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return False
+
+            if self.current_screen == "menu":
+                action = self.menu.handle_event(event)
+                if action == "new_game":
+                    self.current_screen = "config"
+                elif action == "continue":
+                    self.current_screen = "game"
+                elif action == "quit":
+                    return False
+            
+            elif self.current_screen == "config":
+                action = self.config.handle_event(event)
+                if action == "confirm":
+                    # Transférer la configuration au jeu
+                    self.game.setup_from_config(self.config.get_config())
+                    self.current_screen = "game"
+                elif action == "back":
+                    self.current_screen = "menu"
+            
+            elif self.current_screen == "game":
+                action = self.game.handle_event(event)
+                if action == "menu":
+                    self.current_screen= "menu"
+                elif action == "game_over":
+                    # Transférer les résultats
+                    self.results.setup_from_game(self.game.get_results())
+                    self.current_screen = "results"
+            
+            elif self.current_screen == "results":
+                action = self.results.handle_event(event)
+                if action == "replay":
+                    self.current_screen = "config"
+                elif action == "menu":
+                    self.current_screen = "menu"
+        
+        return True
+
+    def run(self):
+        running = True
+        while running:
+            running = self.handle_events()
+
+            # Dessiner l'interface appropriée
+            if self.current_screen == "menu":
+                self.menu.draw()
+            elif self.current_screen == "config":
+                self.config.draw()
+            elif self.current_screen == "game":
+                self.game.draw()
+            elif self.current_screen == "results":
+                self.results.draw()
+            
+            pygame.display.flip()
+            self.clock.tick(FPS)
+        
+        pygame.quit()
+        sys.exit()
+
+if __name__ == "__main__":
+    game = FarmNavigator()
+    game.run()
