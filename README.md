@@ -206,14 +206,14 @@ Online leaderboard for comparing sustainability scores globally.
 
 ---
 
-👥 Team GaamaRamma
+👥 Team GaiaTech
 
 Name	Role
 
-Njimongba Fochivé Mama Abdourahim	Project Leader / Developer (Python, Pygame)
-[Teammate 2]	AI & Logic Developer
-[Teammate 3]	Tester / Documentation / UX
-[Teammate 4]	Data Analyst (NASA Integration)
+Njimongba Fochivé Mama Abdourahim	 / Developer (Python, Pygame)
+Lekane Kounlag Briand Durrande /	AI & Logic Developer
+Hadja Bebbe Hassimatou Bah /	Project Leader / Tester / Documentation / UX
+
 
 
 
