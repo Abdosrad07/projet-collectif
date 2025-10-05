@@ -1,0 +1,78 @@
+{
+    
+    "Choux": {
+        "maturation_days": 28,
+        "max_k": 100,
+        "water_need": 70,
+        "max_water_level": 85,
+        "temp_min": 10,
+        "temp_max": 22,
+        "season_preference": ["Printemps", "Automne"]
+    },
+    "Cacao": {
+        "maturation_days": 35,
+        "max_k": 150,
+        "water_need": 75,
+        "max_water_level": 90,
+        "temp_min": 22,
+        "temp_max": 32,
+        "season_preference": ["Petite saison des pluies", "Grande saison des pluies"]
+    },
+    "Manioc": {
+        "maturation_days": 30,
+        "max_k": 130,
+        "water_need": 50,
+        "max_water_level": 75,
+        "temp_min": 25,
+        "temp_max": 35,
+        "season_preference": ["Petite saison des pluies", "Grande saison des pluies"]
+    },
+    "Mil": {
+        "maturation_days": 22,
+        "max_k": 100,
+        "water_need": 40,
+        "max_water_level": 65,
+        "temp_min": 26,
+        "temp_max": 36,
+        "season_preference": ["Grande saison des pluies"]
+    },
+    "Sorgho": {
+        "maturation_days": 24,
+        "max_k": 110,
+        "water_need": 45,
+        "max_water_level": 65,
+        "temp_min": 25,
+        "temp_max": 34,
+        "season_preference": ["Grande saison des pluies"]
+    },
+    "Thé": {
+        "maturation_days": 32,
+        "max_k": 90,
+        "water_need": 80,
+        "max_water_level": 95,
+        "temp_min": 18,
+        "temp_max": 25,
+        "season_preference": ["Petite saison des pluies", "Grande saison des pluies"]
+    },
+    "Café": {
+        "maturation_days": 34,
+        "max_k": 100,
+        "water_need": 70,
+        "max_water_level": 85,
+        "temp_min": 17,
+        "temp_max": 24,
+        "season_preference": ["Petite saison des pluies", "Grande saison des pluies"]
+    },
+    
+    "Tomate": {
+        "maturation_days": 25,
+        "water_need": 60,
+        "max_water_level": 85,
+        "temp_min": 15,
+        "temp_max": 30,
+        "max_k": 120,
+        "frost_resistant": false
+    }
+}
+      
+

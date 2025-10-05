@@ -1,0 +1,45 @@
+{
+    "Côte d'Ivoire": {
+        "lat": 6.8,
+        "lon": -5.2,
+        "climat": "Tropical humide",
+        "sol": "Ferrallitique",
+        "ph": "5.5-6.5",
+        "cultures": ["Cacao", "Manioc", "Banane", "Igname"],
+        "season_cycle": ["Petite saison des pluies", "Grande saison sèche", "Grande saison des pluies", "Petite saison sèche"],
+        "season_durations": [8, 14, 12, 6],
+        "weather_thresholds": {
+            "heatwave": 35,
+            "frost": 15
+        }
+    },
+    "Sénégal": {
+        "lat": 14.7,
+        "lon": -17.4,
+        "climat": "Sahélien",
+        "sol": "Sableux",
+        "ph": "6.0-7.0",
+        "cultures": ["Mil", "Sorgho", "Arachide", "Café"],
+        "season_cycle": ["Petite saison des pluies", "Grande saison sèche", "Grande saison des pluies", "Petite saison sèche"],
+        "season_durations": [7, 16, 10, 7],
+        "weather_thresholds": {
+            "heatwave": 40,
+            "frost": 10
+        }
+    },
+    "Kenya": {
+        "lat": -1.2,
+        "lon": 36.8,
+        "climat": "Montagnard équatorial",
+        "sol": "Volcanique, riche",
+        "ph": "5.5-6.5",
+        "cultures": ["Thé", "Café", "Maïs", "Haricot"],
+        "season_cycle": ["Petite saison des pluies", "Grande saison sèche", "Grande saison des pluies", "Petite saison sèche"],
+        "season_durations": [9, 13, 11, 7],
+        "weather_thresholds": {
+            "heatwave": 30,
+            "frost": 5
+        }
+    }
+}
+
