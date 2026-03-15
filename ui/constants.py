@@ -8,6 +8,12 @@ les modifications.
 WHITE = (255, 255, 255) # Corrigé: n'était pas blanc
 BLACK = (0, 0, 0)
 
+# --- Couleurs IA et UI ---
+AI_PURPLE = (147, 51, 234)
+GOLD = (255, 215, 0)
+ICE_BLUE = (173, 216, 230)
+DANGER_RED = (238, 68, 68) 
+
 # --- Palette de Verts ---
 GREEN_PRIMARY = (34, 197, 94)
 GREEN_LIGHT = (134, 239, 172)

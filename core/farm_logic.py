@@ -522,4 +522,34 @@ class FarmLogic:
         avg_soil_quality = np.mean([p['soil_quality'] for p in self.plots]) if self.plots else 0
         # Exemple : le sol est devenu stérile
         return avg_soil_quality < 0.2
+    
+    def get_crop_recommendations(self):
+        """Analyse la saison et le sol pour recommander les meilleures cultures."""
+        current_season = self.get_current_season()
+        recommendations = []
 
+        for crop_name, specs in self.crop_definitions.items():
+            # Vérifier si la culture est adaptée à la saison actuelle
+            if current_season in specs.get('preferred_seasons', []):
+                score = 100
+                # Bonus si le sol est de bonne qualité
+                avg_soil = np.mean([p['soil_quality'] for p in self.plots])
+                if avg_soil > 0.8:
+                    score += 20
+                recommendations.append({"name": crop_name, "score": score})
+        
+        return sorted(recommendations, key=lambda x: x['score'], reverse=True)
+
+    def predict_yield(self, plot_index):
+        """Prédit le rendement final d'une parcelle en fonction de son état actuel."""
+        plot = self.plots[plot_index]
+        if not plot["crop"]: return 0
+
+        specs = self.crop_definitions.get(plot["crop"], {})
+        base_yield = specs.get("yield", 15)
+
+        # Facteurs de réduction : manque d'eau, maladies ou sol pauvre
+        health_factor = (plot["soil_quality"] * 0.5) + (plot["water_level"] / 100 * 0.5)
+        disease_penalty = 1.0 - plot["disease_severity"]
+
+        return base_yield * health_factor * disease_penalty

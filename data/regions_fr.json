@@ -40,6 +40,34 @@
             "heatwave": 30,
             "frost": 5
         }
+    },
+    "Cameroun": {
+        "lat": 3.848,
+        "lon": 11.502,
+        "climat": "Tropical avec saison sèche",
+        "sol": "Fertile, argileux",
+        "ph": "5.0-6.0",
+        "cultures": ["Manioc", "Banane Plantain", "Maïs", "Cacao"],
+        "season_cycle": ["Grande saison des pluies", "Petite saison sèche", "Petite saison des pluies", "Grande saison sèche"],
+        "season_durations": [10, 8, 9, 7],
+        "weather_thresholds": {
+            "heatwave": 35,
+            "frost": 0
+        }
+    },
+    "Maroc": {
+        "lat": 31.7917,
+        "lon": -7.0926,
+        "climat": "Méditerranéen",
+        "sol": "Calcaire, riche en minéraux",
+        "ph": "6.5-7.5",
+        "cultures": ["Blé", "Orge", "Olive", "Agrumes"],
+        "season_cycle": ["Hiver humide", "Été sec"],
+        "season_durations": [18, 18],
+        "weather_thresholds": {
+            "heatwave": 40,
+            "frost": -5
+        }
     }
 }
 
