@@ -1,236 +1,281 @@
-🌾 FarmNavigator — Cultivate Smarter, Play Greener
+```markdown
+# 🌿 FarmNavigator — Cultiver intelligemment, apprendre durablement
 
-> An educational farming simulator powered by NASA’s open climate data.
-Learn sustainable agriculture through play — manage your crops, water, and soil while witnessing the impact of your actions on yield, environment, and sustainability.
-
-
-
+> Simulateur agricole éducatif alimenté par des données climatiques ouvertes.
+> Découvrez l'agriculture durable à travers une expérience interactive fondée sur la science, la simulation et l'analyse de données.
 
 ---
 
-🚀 Overview
+## 🚀 Présentation
 
-FarmNavigator is an interactive farming simulator that helps players understand the importance of data-driven agriculture and sustainability.
-The game blends NASA’s open datasets, scientific modeling (via SciPy), and AI-based recommendations to simulate realistic agricultural decision-making.
+**FarmNavigator** est un simulateur agricole interactif conçu pour sensibiliser aux enjeux de l'agriculture durable et de la prise de décision basée sur les données.
 
-Players can plant, irrigate, drain, fertilize, and harvest their virtual crops — while monitoring how each decision affects the ecosystem and overall farm productivity.
+Le projet combine :
 
+- des données climatiques ouvertes,
+- des modèles scientifiques de croissance végétale,
+- des mécanismes de gestion agricole,
+- un système d'assistance intelligent.
 
----
-
-🌍 Challenge Addressed
-
-This project was developed as part of the NASA Space Apps Challenge 2025, under the theme:
-
-> 🛰 “Leveraging Earth Observation Data for Informed Agricultural Decision-Making”
-
-
-
-The goal is to make NASA’s environmental data accessible to everyone — by turning it into a game-based learning experience that teaches sustainable farming practices.
-
+L'utilisateur gère une exploitation virtuelle en prenant des décisions liées aux cultures, à l'irrigation, à la fertilisation et à la qualité du sol, tout en observant leurs impacts sur la production et l'environnement.
 
 ---
 
-🧩 Key Features
+## 🌍 Contexte du projet
 
-🎮 Gameplay Features
+Développé dans le cadre du **NASA Space Apps Challenge 2025**, ce projet répond au thème :
 
-🌱 Dynamic Farm Simulation — Create your own plots, choose location and crops.
+> 🛰 **Leveraging Earth Observation Data for Informed Agricultural Decision-Making**
 
-☀ Real NASA Climate Data Integration — Weather, soil moisture, and solar radiation via the NASA POWER API.
-
-💧 Water Management System — Simulate irrigation, drainage, and droughts.
-
-🌿 Fertilization and Soil Health — Boost yield at the cost of long-term soil quality.
-
-🧠 AI Advisor — Real-time smart suggestions for better sustainability decisions.
-
-⚙ Growth Modeling — Crop evolution simulated using differential equations (SciPy).
-
-🌦 Weather Effects — Rain, snow, and wind animations affecting gameplay.
-
-📊 Results Dashboard — Detailed sustainability score, yield analysis, and AI feedback after each session.
-
-
+L'objectif est de rendre les données environnementales accessibles au grand public à travers un outil pédagogique ludique et concret.
 
 ---
 
-🧠 Educational Impact
+## 🎯 Objectifs
 
-FarmNavigator transforms scientific datasets into interactive lessons.
-Players learn:
+FarmNavigator vise à :
 
-How climate affects agricultural productivity.
-
-How unsustainable actions (overwatering, overfertilizing) damage soil and yield.
-
-How data from NASA satellites can guide better decisions in real life.
-
-
-This makes it an effective STEM educational tool for students, researchers, and farmers alike.
-
+- vulgariser l'utilisation des données spatiales en agriculture ;
+- sensibiliser à la gestion durable des ressources ;
+- démontrer l'impact des décisions agricoles sur les rendements ;
+- encourager l'apprentissage par la simulation ;
+- promouvoir l'agriculture intelligente et résiliente.
 
 ---
 
-🛰 NASA Data Integration
+## 🧩 Fonctionnalités principales
 
-FarmNavigator uses NASA’s POWER API for real climate and environmental parameters:
+### 🎮 Simulation agricole dynamique
 
-Data Type	Description	Source
+- Création et gestion de parcelles agricoles ;
+- Choix de la région et des cultures ;
+- Paramétrage des saisons de culture.
 
-Temperature	Daily surface temperature	NASA POWER API
-Precipitation	Rainfall data for the selected region	NASA POWER API
-Solar Radiation	Energy input for photosynthesis modeling	NASA POWER API
-Wind Speed	Influences evapotranspiration rate	NASA POWER API
-Humidity	Impacts water loss and disease probability	NASA POWER API
+### 🌦 Intégration de données climatiques réelles
 
+Connexion à la **NASA POWER API** pour récupérer :
 
-Additional data sources (optional):
+- température,
+- précipitations,
+- humidité,
+- rayonnement solaire,
+- vitesse du vent.
 
-🌎 AppEEARS for advanced satellite subsets.
+### 💧 Gestion de l'eau
 
-🛰 NASA EarthData for vegetation and soil datasets.
+- Irrigation manuelle ;
+- Drainage ;
+- Gestion des périodes de sécheresse ;
+- Risques liés au sur-arrosage.
 
+### 🌱 Fertilité du sol
 
+- Utilisation d'engrais ;
+- Dégradation progressive du sol ;
+- Arbitrage entre rendement immédiat et durabilité.
+
+### 🧠 Assistant intelligent
+
+Système de recommandations en temps réel :
+
+- conseils d'arrosage,
+- optimisation des ressources,
+- alertes environnementales,
+- stratégies durables.
+
+### 📊 Tableau de bord analytique
+
+En fin de simulation :
+
+- rendement obtenu,
+- score de durabilité,
+- qualité finale du sol,
+- bilan des décisions prises.
 
 ---
 
-🧮 Scientific Modeling
+## 🧠 Impact pédagogique
 
-We employ SciPy’s odeint() to simulate plant growth over time using a system of differential equations.
+FarmNavigator transforme des données scientifiques complexes en expérience interactive.
 
-Example concept:
+L'utilisateur apprend notamment :
 
-\frac{dG}{dt} = α \cdot f(\text{temperature}, \text{humidity}) - β \cdot g(\text{water\_stress}, \text{soil\_degradation})
+- l'influence du climat sur les cultures ;
+- les conséquences du gaspillage en eau ;
+- les effets du surdosage d'engrais ;
+- l'importance des données pour décider efficacement ;
+- les bases de l'agriculture de précision.
 
+Le projet peut servir d'outil pédagogique pour :
 
----
-
-🧑‍💻 Technology Stack
-
-Category	Tools
-
-Programming Language	Python 3
-Game Engine	Pygame
-Scientific Computing	NumPy, SciPy
-Data Access	Requests (NASA POWER API)
-Visualization	Matplotlib
-AI System	Rule-based AI for contextual tips
-Version Control	Git + GitHub
-Design	Figma (UI/UX prototype)
-
-
+- établissements scolaires,
+- formations STEM,
+- sensibilisation agricole,
+- ateliers technologiques.
 
 ---
 
-🧱 Project Architecture
+## 🛰 Sources de données utilisées
 
+### NASA POWER API
+
+| Type de donnée      | Description                                    |
+|---------------------|------------------------------------------------|
+| Température         | Température journalière de surface             |
+| Précipitations      | Données pluviométriques                        |
+| Rayonnement solaire | Énergie disponible pour la photosynthèse       |
+| Vent                | Influence l'évapotranspiration                 |
+| Humidité            | Impact sur les pertes d'eau et les maladies    |
+
+### Extensions possibles
+
+- **NASA EarthData**
+- **AppEEARS**
+- Données satellitaires sur la végétation et les sols
+
+---
+
+## 🧮 Modélisation scientifique
+
+La croissance des cultures est simulée grâce à des équations différentielles résolues avec **SciPy**.
+
+Exemple conceptuel :
+
+$$\frac{dG}{dt} = \alpha \cdot f(\text{température, humidité}) - \beta \cdot g(\text{stress hydrique, dégradation du sol})$$
+
+où :
+
+- $G$ représente la croissance ;
+- $\alpha$ le facteur de développement ;
+- $\beta$ l'impact des contraintes environnementales.
+
+---
+
+## 🧑‍💻 Technologies utilisées
+
+| Catégorie            | Outils                          |
+|----------------------|---------------------------------|
+| Langage principal    | Python 3                        |
+| Interface graphique  | Pygame                          |
+| Calcul scientifique  | NumPy, SciPy                    |
+| API / Web            | Requests                        |
+| Visualisation        | Matplotlib                      |
+| IA                   | Système de règles contextuelles |
+| Versioning           | Git / GitHub                    |
+| Conception UI/UX     | Figma                           |
+
+---
+
+## 🧱 Architecture du projet
+
+```text
 projet-collectif/
 ├── core/
-│   ├── farm_logic.py  # Core game logic for farming simulation
-│   └── nasa_api.py    # (Not provided, but implied) Interface for NASA data
+│   ├── farm_logic.py
+│   └── nasa_api.py
 ├── data/
-│   ├── regions_fr.json  # Region data (climate, soil, crops)
+│   ├── regions_fr.json
 │   └── samples/
-│       └── crops.json   # Crop definitions (growth, water needs, etc.)
+│       └── crops.json
 ├── ui/
-│   ├── config.py      # Configuration interface (plots, years, location)
-│   ├── game.py        # Main game interface (plot management, actions)
-│   ├── menu.py        # Main menu interface
-│   ├── results.py     # Results interface (yields, soil quality, stats)
-│   ├── constants.py   # Shared constants (colors, fonts)
-│   └── widgets.py     # Shared UI widgets (buttons, text rendering)
-├── main.py            # (Not provided, but implied) Entry point of the game
-├── requirements.txt   # (Not provided, but should exist) Project dependencies
-└── README.md          # Project description and instructions
+│   ├── config.py
+│   ├── game.py
+│   ├── menu.py
+│   ├── results.py
+│   ├── constants.py
+│   └── widgets.py
+├── main.py
+├── requirements.txt
+└── README.md
+```
 
-🕹 How to Run Locally
+---
 
-1. Clone the repository
+## 🕹 Installation et exécution
 
+### 1. Cloner le dépôt
+
+```bash
 git clone https://github.com/Abdosrad07/projet-collectif.git
 cd projet-collectif
+```
 
-2. Create a virtual environment
+### 2. Créer un environnement virtuel
 
+```bash
 python -m venv venv
-source venv/bin/activate    # On Linux/Mac
-venv\Scripts\activate       # On Windows
+```
 
-3. Install dependencies
+### 3. Activer l'environnement
 
+**Linux / macOS**
+
+```bash
+source venv/bin/activate
+```
+
+**Windows**
+
+```bash
+venv\Scripts\activate
+```
+
+### 4. Installer les dépendances
+
+```bash
 pip install -r requirements.txt
+```
 
-4. Launch the game
+### 5. Lancer l'application
 
+```bash
 python main.py
-
-
----
-
-🌱 Gameplay Overview
-
-Choose your region (climate, soil type, and crops auto-adjust).
-
-Configure plot count and size.
-
-Manage resources: water, fertilizer, and soil quality.
-
-Watch crops evolve through five visual growth stages.
-
-Monitor NASA weather data updates dynamically.
-
-Reach end of the season → get sustainability and yield reports.
-
-
-Victory:
-🌾 High yield + high sustainability score.
-
-Failure:
-💧 Overwatering, 🧪 over-fertilizing, or 🌍 soil depletion leading to low final score.
-
+```
 
 ---
 
-🤖 Future Improvements
+## 🌱 Déroulement d'une partie
 
-Integration with AppEEARS for real satellite-based soil and vegetation data.
+1. Sélection de la région.
+2. Choix des cultures.
+3. Gestion des ressources (eau, engrais, sol).
+4. Suivi de la croissance des plantes.
+5. Analyse des conditions climatiques.
+6. Bilan final de performance.
 
-Addition of machine learning models to predict yield trends.
+### Succès
 
-Mobile version using Kivy or Flutter.
+🌾 Rendement élevé + score de durabilité élevé.
 
-Online leaderboard for comparing sustainability scores globally.
+### Échec
 
-
-
----
-
-👥 Team GaiaTech
-
-Name	Role
-
-Njimongba Fochivé Mama Abdourahim	 / Developer (Python, Pygame)
-Lekane Kounlag Briand Durrande /	AI & Logic Developer
-Hadja Bebbe Hassimatou Bah /	Project Leader / Tester / Documentation / UX
-
-
-
+- 💧 Sur-arrosage
+- 🧪 Sur-fertilisation
+- 🌍 Dégradation du sol
 
 ---
 
-💬 Quote
+## 🤖 Perspectives d'évolution
 
-> “FarmNavigator turns NASA data into a living classroom —
-where every drop of water, every seed, and every decision matters.”
-
-
-
+- Version mobile Android / iOS ;
+- Connexion à de vrais capteurs IoT ;
+- Intelligence artificielle prédictive ;
+- Mode multijoueur ou classement mondial ;
+- Cartographie avancée ;
+- Recommandations personnalisées selon la région.
 
 ---
 
-📜 License
+## 💬 Citation
 
-This project uses NASA’s Open Data in compliance with their data use policy.
-Developed for the NASA Space Apps Challenge 2025.
-Code released under the MIT License.
+> « Chaque décision agricole a un impact. FarmNavigator permet de le comprendre avant d'agir. »
+
+---
+
+## 📜 Licence
+
+Ce projet utilise des données ouvertes conformément aux politiques d'utilisation des fournisseurs concernés.
+
+Développé dans un cadre éducatif et expérimental.  
+Code distribué sous licence **MIT**.
+```
